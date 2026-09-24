@@ -66,9 +66,32 @@ int main(int argc, char* argv[])
   if (solver->Solve() != SYSTEM_OK)
     throw EXCEPTION("Error: solver.Solve crash!!!");
 
+  GlobalizerBenchmarksProblem* gbp = dynamic_cast<GlobalizerBenchmarksProblem*> (problem);
+  auto result = solver->GetSolutionResult();
+  double* bestTrialY = result->BestTrial->y;
+  std::vector<double> y; 
+  std::vector<std::string> u;
+
+  if (gbp != nullptr)
+  {
+      gbp->XtoYU(bestTrialY, y, u);
+  }
+  else
+  {
+      y.resize(problem->GetDimension());
+      for (int i = 0; i < problem->GetDimension(); i++)
+      {
+          y[i] = bestTrialY[i];
+      }
+  }
+  
+  globalizerBenchmarksProblem->Finalize(y, u);
+
 
   if (parameters.IsMPIInit())
     MPI_Finalize();
+
+
 
   return 0;
 }
