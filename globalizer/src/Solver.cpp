@@ -667,6 +667,8 @@ IProblem* Solver::GetProblem()
 // ------------------------------------------------------------------------------------------------
 SolutionResult* Solver::GetSolutionResult()  /// best point
 {
+  if (mProcess == nullptr)
+    return nullptr;
 
   SolutionResult* result = new SolutionResult();
   result->BestTrial = mProcess->GetOptimEstimation()->Clone();
