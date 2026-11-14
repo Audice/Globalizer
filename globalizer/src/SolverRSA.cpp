@@ -495,6 +495,10 @@ SolutionResult* Solver_RSA::GetSolutionResult()  /// best point
 {
   if (result != 0)
     delete result;
+  result = 0;
+  // Процессы-вычислители MPI (ранг > 0) задачу не решают: у них нет процесса и результата
+  if (mProcess == 0)
+    return 0;
   result = new SolutionResult();
   result->BestTrial = mProcess->GetOptimEstimation();
   result->IterationCount = mProcess->GetIterationCount();
