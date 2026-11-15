@@ -440,7 +440,11 @@ bool CreateBenchmarkProblem(const json& p, ProblemHolder& holder)
 {
 #ifdef _GLOBALIZER_BENCHMARKS
   const std::string lib = p.at("lib").get<std::string>();
-#ifdef WIN32
+#if defined(WIN32) && defined(_MSC_VER)
+  // Сначала библиотека того же компилятора: в общей _bin могут лежать и сборки GCC (lib<имя>.dll),
+  // а их классы задач несовместимы по ABI с MSVC (SetDimension отклоняет любую размерность)
+  const std::vector<std::string> names = { lib + ".dll", lib + "_d.dll", "lib" + lib + ".dll", "lib" + lib + "_d.dll" };
+#elif defined(WIN32)
   const std::vector<std::string> names = { "lib" + lib + ".dll", lib + ".dll", "lib" + lib + "_d.dll" };
 #elif defined(__APPLE__)
   const std::vector<std::string> names = { "lib" + lib + ".dylib", "lib" + lib + ".so" };
