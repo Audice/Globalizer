@@ -20,8 +20,6 @@
 int main(int argc, char* argv[])
 {
   GlobalizerInitialization(argc, argv, true);
-  std::cout<<"!!!!!!!!!!!!++++++++AAAAAAAAAA";
-  std::cout<<parameters.GetProcNum()<<std::endl;
   IProblem* problem = nullptr;
 #ifdef _GLOBALIZER_BENCHMARKS
   GlobalOptimizationProblemManager manager;

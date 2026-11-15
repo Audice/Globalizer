@@ -1312,7 +1312,7 @@ bool Method::EstimateOptimum()
     if (iteration.pCurTrials[j] == 0)
       continue;
     isOptimumUpdated = UpdateOptimumEstimation(*iteration.pCurTrials[j]);
-    if (iteration.pCurTrials[0]->index < 0)
+    if (iteration.pCurTrials[j]->index < 0)
         LastIterationPointType = -1;
     else
         LastIterationPointType = 0;
